@@ -76,6 +76,8 @@ class Field extends LinearLayout {
                     boolean active = (boolean) view.getTag(ACTIVE_TAG_KEY);
                     if (active) {
                         score += mole.getCurrentLevel() * 2;
+                        onCircleCliked(score);
+                        listener.onScoreChange(score);
                     } else {
                         mole.stopHopping();
                         listener.onGameEnded(score);
@@ -83,9 +85,20 @@ class Field extends LinearLayout {
                 }
             });
         }
+        listener.onScoreChange(score);
 
         mole = new Mole(this);
         mole.startHopping();
+    }
+
+
+    public void endgame(){
+        resetScore();
+        resetCircles();
+    }
+    public int onCircleCliked(int score) {
+        score += mole.getCurrentLevel() * 2;
+        return score;
     }
 
     public int getCurrentCircle() {
@@ -116,9 +129,15 @@ class Field extends LinearLayout {
         this.listener = listener;
     }
 
+
+
     public interface Listener {
         void onGameEnded(int score);
 
         void onLevelChange(int level);
+
+        void onScoreChange(int Score);
+
+        int onCircleCliked(int score);
     }
 }

@@ -23,6 +23,7 @@ class Mole {
 
     public void startHopping(){
         field.getListener().onLevelChange(getCurrentLevel());
+
         startTimeForLevel = System.currentTimeMillis();
 
         future = scheduledExecutorService.scheduleAtFixedRate(() -> {
@@ -48,6 +49,8 @@ class Mole {
         return currentLevel+1;
     }
 
+
+
     private int nextHole(){
         int hole = new Random().nextInt(field.totalCircles()-1);
         if(hole == field.getCurrentCircle()){
@@ -55,4 +58,6 @@ class Mole {
         }
         return hole;
     }
+
+
 }
